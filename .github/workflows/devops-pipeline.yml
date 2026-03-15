@@ -1,0 +1,33 @@
+name: DevOps CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Build User Service Docker Image
+      run: |
+        docker build -t user-service ./services/user-service
+
+    - name: Build Product Service Docker Image
+      run: |
+        docker build -t product-service ./services/product-service
+
+    - name: Build Order Service Docker Image
+      run: |
+        docker build -t order-service ./services/order-service
+
+    - name: Build Notification Service Docker Image
+      run: |
+        docker build -t notification-service ./services/notification-service
+
+    - name: CI Complete
+      run: echo "All services built successfully"
